@@ -5,6 +5,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -12,6 +13,8 @@ import org.testng.Assert;
 import java.io.IOException;
 import java.sql.Driver;
 import java.time.Duration;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class commonMethods {
 
@@ -63,5 +66,25 @@ public class commonMethods {
         ((JavascriptExecutor) driverContext.Driver).executeScript("arguments[0].scrollIntoView(true);", element);
         waitUntilWebElementIsVisible(element);
         clickByJS(element);
+    }
+
+    public void staticWait(long time)
+    {
+        try{
+            Thread.sleep(time);
+
+        }catch(Exception e){
+            System.out.println("exception is "+e);
+        }
+    }
+
+    public  int generateRandomNumber(int no) {
+        Random random = new Random();
+        return random.nextInt(no) + 1;
+    }
+
+    public void waitForLoad() {
+        new WebDriverWait(driverContext.Driver, Duration.ofSeconds(30)).until((ExpectedCondition<Boolean>) wd ->
+                ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("complete"));
     }
 }

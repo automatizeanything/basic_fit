@@ -4,6 +4,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
@@ -21,7 +22,9 @@ public class initializeDriver {
         String browsername = utilityFecthProperty.fetchPropertyValue("browser");
         switch (browsername) {
             case "chrome":
-                driver = new ChromeDriver();
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--password-store=basic");
+                driver = new ChromeDriver(options);
                 break;
             case "safari":
                 driver = new SafariDriver();
